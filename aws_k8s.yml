@@ -1,0 +1,19 @@
+---
+
+- name: Create or delete ec2 instances, deploy k8s to them
+  hosts: localhost
+  collections:
+    - amazon.aws
+    - community.aws.ec2_instance_facts
+
+  vars:
+    ansible_aws_instance_type: 't2.micro'
+    ansible_aws_image_name:  ami-01fee56b22f308154
+    ansible_aws_region: us-west-2
+    ansible_instance_status: query
+    ansible_ec2_debug: false
+
+  roles:
+    - role: ansible-role-ec2-nodes
+      vars:
+        ansible_instance_count: 3
