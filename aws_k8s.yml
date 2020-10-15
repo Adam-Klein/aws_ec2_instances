@@ -10,10 +10,11 @@
     ansible_aws_instance_type: 't2.micro'
     ansible_aws_image_name:  ami-01fee56b22f308154
     ansible_aws_region: us-west-2
-    ansible_instance_status: query
+    ansible_aws_instance_group: shell
+    ansible_instance_status: destroy
     ansible_ec2_debug: false
 
   roles:
     - role: ansible-role-ec2-nodes
       vars:
-        ansible_instance_count: 3
+        ansible_instance_count: 2
