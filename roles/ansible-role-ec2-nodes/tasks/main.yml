@@ -6,18 +6,21 @@
     instance_type: "{{ ansible_aws_instance_type }}"
     image: "{{ ansible_aws_image_name }}"
     wait: true
+    group: "{{ ansible_aws_security_group }}"
+    key_name: "{{ ansible_aws_key_name }}"
+    instance_tags:
+      group: "{{ ansible_aws_instance_group }}"
     region: "{{ ansible_aws_region }}"
     count: "{{ ansible_instance_count }}"
-  register: ec2
+  register: __instance_deployment
   when: ansible_instance_status == 'create' or
         ansible_instance_status == 'create_and_destroy'
 
-- name: Remove instances created in same play
-  amazon.aws.ec2:
-    state: 'absent'
-    instance_ids: "{{ ec2.instance_ids }}"
-    region: "{{ ansible_aws_region }}"
-  when: ansible_instance_status == 'create_and_destroy'
+- name: Dump deployment results
+  debug:
+    msg: "{{ __instance_deployment }}"
+  when: ansible_instance_status == 'create' or
+        ansible_instance_status == 'create_and_destroy'
 
 - name: Get instance data
   block:
@@ -31,13 +34,15 @@
       msg: "{{ ec2 }}"
     when: ansible_ec2_debug == true
     
-  - name: Report instance ids and state
+  - name: Report instance ids, tags and state
     debug:
-      msg: "{{ item.instance_id }}: {{ item.state.name }}"
+      msg: "Instance ID: {{ item.instance_id }} / tags: {{ item.tags }} / state: {{ item.state.name }}"
     with_items:
       - "{{ ec2.instances }}"
+    when: item.state.name == 'running'
   
-  when: ansible_instance_status == 'query' or
+  when: ansible_instance_status == 'create_and_destroy' or 
+        ansible_instance_status == 'query' or
         ansible_instance_status == 'destroy'
   
 - name: Terminate instances
@@ -47,5 +52,5 @@
     region: "{{ ansible_aws_region }}"
   with_items:
     - "{{ ec2.instances }}"
-  when: 
-    - ansible_instance_status == 'destroy'
+  when: ansible_instance_status == 'create_and_destroy' or
+        ansible_instance_status == 'destroy'
