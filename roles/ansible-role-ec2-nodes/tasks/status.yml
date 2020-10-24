@@ -1,0 +1,19 @@
+---
+
+# Inventory specified number of EC2 instances
+
+- name: Gather instance inventory data
+  community.aws.ec2_instance_facts:
+  register: ec2
+
+- name: Dump instance info
+  debug:
+    msg: "{{ ec2 }}"
+  when: ansible_ec2_debug == true
+
+- name: Report instance ids, tags and state
+  debug:
+    msg: "Instance ID: {{ item.instance_id }} / tags: {{ item.tags }} / state: {{ item.state.name }}"
+  with_items:
+    - "{{ ec2.instances }}"
+  when: item.state.name == 'running'
