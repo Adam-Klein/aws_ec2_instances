@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-role-ec2-nodes
+
+- name: Create instances
+  include_tasks:
+    create.yml
+  when: ansible_instance_status == 'create' or
+        ansible_instance_status == 'create_and_destroy'
+
+- name: Get instance data
+  include_tasks:
+    status.yml
+
+- name: Restart or stop instances
+  include_tasks:
+    start-stop.yml
+  when: ansible_instance_status == 'running' or
+        ansible_instance_status == 'restarted' or 
+        ansible_instance_status == 'stopped'
+
+- name: Terminate instances
+  include_tasks:
+    terminate.yml
+  when: ansible_instance_status == 'create_and_destroy' or
+        ansible_instance_status == 'destroy'

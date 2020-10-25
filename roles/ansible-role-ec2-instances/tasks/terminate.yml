@@ -1,0 +1,13 @@
+---
+
+# Terminate EC2 instances
+
+- name: Terminate EC2 instances
+  amazon.aws.ec2:
+    state: 'absent'
+    instance_ids: '{{ item.instance_id }}'
+    region: "{{ ansible_aws_region }}"
+    instance_tags:
+      group: "{{ ansible_aws_instance_group }}"
+  with_items:
+    - "{{ ec2.instances }}"

@@ -1,4 +1,3 @@
-# aws_k8s
+# aws_ec2
 
-Ansible role to deploy EC2 instances to AWS, install Kubernetes and maintain cluster with Terraform
-
+Ansible role to deploy / query / stop / terminate / restart EC2 instances

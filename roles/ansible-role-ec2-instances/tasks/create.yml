@@ -1,0 +1,16 @@
+---
+
+# Create specified number of AWS instances
+
+- name: Create instances
+  amazon.aws.ec2:
+    instance_type: "{{ ansible_aws_instance_type }}"
+    image: "{{ ansible_aws_image_name }}"
+    wait: true
+    group: "{{ ansible_aws_security_group }}"
+    key_name: "{{ ansible_aws_key_name }}"
+    instance_tags:
+      group: "{{ ansible_aws_instance_group }}"
+    region: "{{ ansible_aws_region }}"
+    count: "{{ ansible_instance_count }}"
+  register: __instance_deployment
