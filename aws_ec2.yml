@@ -13,15 +13,10 @@
     ansible_aws_security_group: "Filbert_Estates_ssh"
     ansible_aws_key_name: "alklein_us-west"
     ansible_aws_instance_group: "k8s-rke"
-    ansible_instance_status: stopped
-    ansible_aws_activity: build
+    ansible_instance_status: running
     ansible_ec2_debug: false
-    ansible_ec2_packages:
-      - docker-ce
 
   roles:
   - role: ansible-role-ec2-instances
-    hosts: localhost
     vars:
     ansible_instance_count: 7
-    when: ansible_aws_activity == "build"
