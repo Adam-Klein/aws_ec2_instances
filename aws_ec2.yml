@@ -12,8 +12,8 @@
     ansible_aws_region: "us-west-2"
     ansible_aws_security_group: "Filbert_Estates_ssh"
     ansible_aws_key_name: "alklein_us-west"
-    ansible_aws_instance_group: "test"
-    ansible_instance_status: create
+    ansible_aws_instance_group: "k8s-rke"
+    ansible_instance_status: stopped
     ansible_aws_activity: build
     ansible_ec2_debug: false
     ansible_ec2_packages:
@@ -23,10 +23,5 @@
   - role: ansible-role-ec2-instances
     hosts: localhost
     vars:
-    ansible_instance_count: 1
+    ansible_instance_count: 7
     when: ansible_aws_activity == "build"
-
-  - role: ansible-role-k8s-on-ec2
-    hosts: tag_group_k8s_rke
-    when: ansible_aws_activity == install
-
