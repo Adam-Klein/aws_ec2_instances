@@ -11,11 +11,6 @@
   include_tasks:
     status.yml
 
-- name: Install packages
-  include_tasks:
-    install_pkgs.yml
-  when: ansible_instance_status == 'packages'
-
 - name: Restart or stop instances
   include_tasks:
     start-stop.yml
