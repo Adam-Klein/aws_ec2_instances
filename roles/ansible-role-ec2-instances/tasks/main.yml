@@ -22,4 +22,4 @@
   include_tasks:
     terminate.yml
   when: ansible_instance_status == 'create_and_destroy' or
-        ansible_instance_status == 'destroy'
+        ansible_instance_status == 'terminated'

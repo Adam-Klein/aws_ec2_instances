@@ -8,12 +8,14 @@
 
   vars:
     ansible_aws_instance_type: "t2.micro"
-    ansible_aws_image_name:  "ami-01fee56b22f308154"
+    ansible_aws_image_name:  "ami-02f147dfb8be58a10"
     ansible_aws_region: "us-west-2"
-    ansible_aws_security_group: "Filbert_Estates_ssh"
+    ansible_aws_security_group: "rke_k8s_subnet-43cd7908"
     ansible_aws_key_name: "alklein_us-west"
-    ansible_aws_instance_group: "k8s-rke"
-    ansible_instance_status: running
+    ansible_aws_instance_group: "rke-k8s"
+    ansible_aws_vpc_subnet_id: "subnet-43cd7908"
+    ansible_instance_status: terminated
+
     ansible_ec2_debug: false
 
   roles:

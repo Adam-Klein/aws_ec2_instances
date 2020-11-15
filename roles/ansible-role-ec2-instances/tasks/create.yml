@@ -10,7 +10,8 @@
     group: "{{ ansible_aws_security_group }}"
     key_name: "{{ ansible_aws_key_name }}"
     instance_tags:
-      group: "{{ ansible_aws_instance_group }}"
+      Group: "{{ ansible_aws_instance_group }}"
+    vpc_subnet_id: "{{ ansible_aws_vpc_subnet_id }}"
     region: "{{ ansible_aws_region }}"
     count: "{{ ansible_instance_count }}"
   register: __instance_deployment
